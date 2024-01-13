@@ -75,7 +75,7 @@ class ColorManager:
                 current_color = 'green'
             elif id == self._max_counter-1:
                 current_color = 'red'
-                mixer.music.load('Sirena.mp3')
+                mixer.music.load('Sirena_policii.mp3')
                 mixer.music.play()
             else:
                 current_color = 'yellow'
