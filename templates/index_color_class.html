@@ -88,8 +88,8 @@
         <h1>Шкала поведінки</h1>
 
         <div class="boxes-container">
-            {% for led_name, led_color in box_items.items() %}
-                <div id="{{ led_name }}" class="box {{ led_color }}"></div>
+            {% for led_name, led_info in box_items.items() %}
+                <div id="{{ led_name }}" class="box {{ led_info[0] }}">{{ led_info[1] }}</div>
             {% endfor %}
         </div>
 

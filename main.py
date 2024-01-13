@@ -124,7 +124,7 @@ class ColorManager:
     def get_box_items(self):
         ui_dict = {}
         for item in self.box_items.values():
-            ui_dict[item.led_name] = item.led_color
+            ui_dict[item.led_name] = (item.led_color, item.led_status)
         return ui_dict
 
 color_manager = ColorManager()
