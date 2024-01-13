@@ -66,8 +66,10 @@ class ColorManager:
             cur_box = self.box_items[cur_gpio]
             cur_box.led_status = 1
             cur_box.led_color = current_color
+            print(f'update_box_color() id: {id}')
+            print(f'update_box_color() cur_led_status: {cur_led_status}')
             if id == self.counter-1 and self.cur_led_status == 0.5:
-                cur_box.led_status = 1
+                cur_box.led_status = self.cur_led_status
                 cur_box.led.blink(0.5, 0.5)
             else:
                 cur_box.led.on()
