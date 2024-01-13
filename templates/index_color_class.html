@@ -52,6 +52,7 @@
         .red { background-color: red; }
         .green { background-color: green; }
         .yellow { background-color: yellow; }
+        .blue { background-color: blue; }
         .grey { background-color: #ccc; }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -92,12 +93,12 @@
             {% endfor %}
         </div>
 
-        <button id="better" class="btn green" onclick="submitFormAndResetColor('btn1')">better</button>
+        <button id="better" class="btn green" onclick="submitFormAndResetColor('better')">better</button>
 
-        <button id="worse" class="btn red" onclick="submitFormAndResetColor('btn2')">worse</button>
+        <button id="worse" class="btn red" onclick="submitFormAndResetColor('worse')">worse</button>
     </div>
     <div>
-        <button id="domofon" class="" onclick="submitFormAndResetColor('btn2')">worse</button>
+        <button id="domofon" class="btn blue" onclick="submitFormAndResetColor('domofon')">Домофон</button>
     </div>
 </body>
 </html>

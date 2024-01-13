@@ -78,14 +78,13 @@ def index():
 def process_button(button_id):
     click_count = request.json.get('click_count', 0)
     # Update the color based on click count (for example, change to red on every even click)
-    new_color = 'red' if button_id == 'worse' else 'grey'
     if button_id == 'better':
-        new_color ='grey'
         color_manager.dec_counter()
-    else:
-        new_color = 'red'
+    elif button_id == 'worse':
         color_manager.inc_counter()
-    print(f'Set color {new_color}')
+    elif button_id == 'domofon':
+        mixer.music.load('Domofon.mp3')
+        mixer.music.play()
     color_manager.update_box_color()
     print(color_manager.get_box_items())
     return jsonify(success=True)
