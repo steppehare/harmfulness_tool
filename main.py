@@ -19,6 +19,7 @@ class BoxItem:
 class ColorManager:
     def __init__(self):
         self.counter = 0
+        self.cur_led_status = 1
         self.gpios = ['GPIO13', 'GPIO6', 'GPIO5', 'GPIO22', 'GPIO27', 'GPIO17', 'GPIO4']
         self._max_counter = len(self.gpios)
         self.box_items = {}
@@ -26,12 +27,20 @@ class ColorManager:
         self.initialize_box_items()
 
     def inc_counter(self):
-        self.counter += 1
-        self.counter = min(self.counter, self._max_counter)
+        if self.cur_led_status == 1:
+            self.counter += 1
+            self.counter = min(self.counter, self._max_counter)
+        elif self.cur_led_status == 0.5:
+            self.cur_led_status = 1
 
     def dec_counter(self):
-        self.counter -= 1
-        self.counter = max(self.counter, 0)
+        if self.counter > 0:
+            if self.cur_led_status == 1:
+                self.cur_led_status = 0.5
+            elif self.cur_led_status == 0.5:
+                self.cur_led_status = 1
+                self.counter -= 1
+                self.counter = max(self.counter, 0)
 
     def initialize_box_items(self):
         # Initialize button colors to grey
@@ -54,7 +63,11 @@ class ColorManager:
             cur_box = self.box_items[cur_gpio]
             cur_box.led_status = 1
             cur_box.led_color = current_color
-            cur_box.led.on()
+            if id == self.counter-1 and self.cur_led_status == 0.5:
+                cur_box.led_status = 1
+                cur_box.led.blink(0.5, 0.5)
+            else:
+                cur_box.led.on()
         for id in range(self.counter, self._max_counter):
             cur_gpio = self.gpios[id]
             cur_box = self.box_items[cur_gpio]
