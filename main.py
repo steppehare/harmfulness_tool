@@ -36,15 +36,16 @@ class ColorManager:
     def inc_counter(self):
         print(f'inc_counter() counter: {self.counter}')
         print(f'inc_counter() current_led_status: {self.current_led_status}')
-        if self.current_led_status == 1:
-            print(f'inc_counter() current_led_status==1: {self.current_led_status}')
-            self.current_led_status == 0.5
-            self.counter += 1
-            self.counter = min(self.counter, self._max_counter)
-            print(f'inc_counter() current_led_status==1 new: {self.current_led_status}')
-        elif self.current_led_status == 0.5:
-            print(f'inc_counter() current_led_status==0.5: {self.current_led_status}')
-            self.current_led_status = 1
+        if self.counter > 0:
+            if self.current_led_status == 1:
+                print(f'inc_counter() current_led_status==1: {self.current_led_status}')
+                self.counter += 1
+                self.counter = min(self.counter, self._max_counter)
+                self.current_led_status == 0.5
+                print(f'inc_counter() current_led_status==1 new: {self.current_led_status}')
+            elif self.current_led_status == 0.5:
+                print(f'inc_counter() current_led_status==0.5: {self.current_led_status}')
+                self.current_led_status = 1
 
     def dec_counter(self):
         print(f'dec_counter() counter: {self.counter}')
