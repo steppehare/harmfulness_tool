@@ -20,7 +20,7 @@ class ColorManager:
     def __init__(self):
         self.counter = 0
         print('__init__()')
-        self.cur_led_status = 1
+        self.cur_led_status: float = 1.0
         self.gpios = ['GPIO13', 'GPIO6', 'GPIO5', 'GPIO22', 'GPIO27', 'GPIO17', 'GPIO4']
         self._max_counter = len(self.gpios)
         self.box_items = {}
@@ -30,7 +30,7 @@ class ColorManager:
     def inc_counter(self):
         print(f'inc_counter() counter: {self.counter}')
         print(f'inc_counter() cur_led_status: {self.cur_led_status}')
-        if self.cur_led_status == 1:
+        if self.cur_led_status == 1.0:
             print(f'inc_counter() cur_led_status==1: {self.cur_led_status}')
             self.cur_led_status == 0.5
             self.counter += 1
@@ -44,12 +44,12 @@ class ColorManager:
         print(f'dec_counter() counter: {self.counter}')
         print(f'dec_counter() cur_led_status: {self.cur_led_status}')
         if self.counter > 0:
-            if self.cur_led_status == 1:
+            if self.cur_led_status == 1.0:
                 print(f'dec_counter() cur_led_status==1: {self.cur_led_status}')
                 self.cur_led_status = 0.5
             elif self.cur_led_status == 0.5:
                 print(f'dec_counter() cur_led_status==0.5: {self.cur_led_status}')
-                self.cur_led_status = 1
+                self.cur_led_status = 1.0
                 self.counter -= 1
                 self.counter = max(self.counter, 0)
 
