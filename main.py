@@ -84,7 +84,7 @@ class ColorManager:
             cur_box.led_color = current_color
             print(f'update_box_color() id: {id}')
             print(f'update_box_color() current_led_status: {self.current_led_status}')
-            if id != 0 and self.current_led_status == 0.5:
+            if id == self.counter-1 and self.current_led_status == 0.5:
                 cur_box.led_status = 0.5
                 cur_box.led.blink(0.5, 0.5)
             else:
