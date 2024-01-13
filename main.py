@@ -97,9 +97,12 @@ class ColorManager:
             self.led_p_red.off()
             self.led_p_blue.off()
         else:
+            self.police_mode = True
             self.led_p_red.blink(0.5, 0.5)
             sleep(0.5)
             self.led_p_blue.blink(0.5, 0.5)
+            mixer.music.load('Sirena_DPS.mp3')
+            mixer.music.play()
 
 
     def get_box_items(self):
