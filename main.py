@@ -20,7 +20,7 @@ class ColorManager:
     def __init__(self):
         self.counter = 0
         print('__init__()')
-        self.cur_led_status: float = 1.0
+        self.cur_led_status = 'on'
         self.gpios = ['GPIO13', 'GPIO6', 'GPIO5', 'GPIO22', 'GPIO27', 'GPIO17', 'GPIO4']
         self._max_counter = len(self.gpios)
         self.box_items = {}
@@ -30,26 +30,26 @@ class ColorManager:
     def inc_counter(self):
         print(f'inc_counter() counter: {self.counter}')
         print(f'inc_counter() cur_led_status: {self.cur_led_status}')
-        if self.cur_led_status == 1.0:
+        if self.cur_led_status == 'on':
             print(f'inc_counter() cur_led_status==1: {self.cur_led_status}')
-            self.cur_led_status == 0.5
+            self.cur_led_status == 'blink'
             self.counter += 1
             self.counter = min(self.counter, self._max_counter)
             print(f'inc_counter() cur_led_status==1 new: {self.cur_led_status}')
-        elif self.cur_led_status == 0.5:
+        elif self.cur_led_status == 'blink':
             print(f'inc_counter() cur_led_status==0.5: {self.cur_led_status}')
-            self.cur_led_status = 1
+            self.cur_led_status = 'on'
 
     def dec_counter(self):
         print(f'dec_counter() counter: {self.counter}')
         print(f'dec_counter() cur_led_status: {self.cur_led_status}')
         if self.counter > 0:
-            if self.cur_led_status == 1.0:
+            if self.cur_led_status == 'on':
                 print(f'dec_counter() cur_led_status==1: {self.cur_led_status}')
-                self.cur_led_status = 0.5
+                self.cur_led_status = 'blink'
             elif self.cur_led_status == 0.5:
                 print(f'dec_counter() cur_led_status==0.5: {self.cur_led_status}')
-                self.cur_led_status = 1.0
+                self.cur_led_status = 'on'
                 self.counter -= 1
                 self.counter = max(self.counter, 0)
 
@@ -76,8 +76,8 @@ class ColorManager:
             cur_box.led_color = current_color
             print(f'update_box_color() id: {id}')
             print(f'update_box_color() cur_led_status: {self.cur_led_status}')
-            if id == self.counter-1 and self.cur_led_status == 0.5:
-                cur_box.led_status = self.cur_led_status
+            if id == self.counter-1 and self.cur_led_status == 'blink':
+                cur_box.led_status = 0.5
                 cur_box.led.blink(0.5, 0.5)
             else:
                 cur_box.led.on()
