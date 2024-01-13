@@ -27,11 +27,13 @@ class ColorManager:
         self.initialize_box_items()
 
     def inc_counter(self):
-        if self.cur_led_status == 1:
-            self.counter += 1
-            self.counter = min(self.counter, self._max_counter)
-        elif self.cur_led_status == 0.5:
-            self.cur_led_status = 1
+        if self.counter > 0:
+            if self.cur_led_status == 1:
+                self.cur_led_status == 0.5
+                self.counter += 1
+                self.counter = min(self.counter, self._max_counter)
+            elif self.cur_led_status == 0.5:
+                self.cur_led_status = 1
 
     def dec_counter(self):
         if self.counter > 0:
