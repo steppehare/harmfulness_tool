@@ -1,13 +1,29 @@
 from flask import Flask, render_template, request, jsonify
+from gpiozero import LED
+from pygame import mixer
+from dataclasses import dataclass
+
 
 app = Flask(__name__)
+
+
+@dataclass
+class BoxItem:
+    led: LED
+    led_name: str
+    led_color: str = 'grey'
+    led_status: float = 0.0
+    led_name2: str = ''
+
 
 class ColorManager:
     def __init__(self):
         self.counter = 0
-        self._max_counter = 10
-        self.box_colors = {}
-        self.initialize_button_colors()
+        self.gpios = ['GPIO13', 'GPIO6', 'GPIO5', 'GPIO22', 'GPIO27', 'GPIO17', 'GPIO4']
+        self._max_counter = len(self.gpios)
+        self.box_items = {}
+        mixer.init()
+        self.initialize_box_items()
 
     def inc_counter(self):
         self.counter += 1
@@ -17,10 +33,10 @@ class ColorManager:
         self.counter -= 1
         self.counter = max(self.counter, 0)
 
-    def initialize_button_colors(self):
+    def initialize_box_items(self):
         # Initialize button colors to grey
-        for i in range(0, self._max_counter):
-            self.box_colors[f'box{i}'] = 'grey'
+        for gpio in self.gpios:
+            self.box_items[gpio] = BoxItem(LED(gpio), gpio)
 
     def update_box_color(self):
         for id in range(self.counter):
@@ -28,20 +44,33 @@ class ColorManager:
                 current_color = 'green'
             elif id == self._max_counter-1:
                 current_color = 'red'
+                mixer.music.load('tmp.mp3')
+                mixer.music.play()
             else:
                 current_color = 'yellow'
-            self.box_colors[f'box{id}'] = current_color
+            cur_gpio = self.gpios[id]
+            cur_box = self.box_items[cur_gpio]
+            cur_box.led_status = 1
+            cur_box.led_color = current_color
+            cur_box.led.on()
         for id in range(self.counter, self._max_counter):
-            self.box_colors[f'box{id}'] = 'grey'
+            cur_gpio = self.gpios[id]
+            cur_box = self.box_items[cur_gpio]
+            cur_box.led_status = 0
+            cur_box.led_color = 'grey'
+            cur_box.led.off()
 
-    def get_box_colors(self):
-        return self.box_colors
+    def get_box_items(self):
+        ui_dict = {}
+        for item in self.box_items.values():
+            ui_dict[item.led_name] = item.led_color
+        return ui_dict
 
 color_manager = ColorManager()
 
 @app.route('/')
 def index():
-    return render_template('index_color_class.html', box_colors=color_manager.get_box_colors())
+    return render_template('index_color_class.html', box_items=color_manager.get_box_items())
 
 @app.route('/process_button/<button_id>', methods=['POST'])
 def process_button(button_id):
@@ -56,9 +85,9 @@ def process_button(button_id):
         color_manager.inc_counter()
     print(f'Set color {new_color}')
     color_manager.update_box_color()
-    print(color_manager.get_box_colors())
+    print(color_manager.get_box_items())
     return jsonify(success=True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
 

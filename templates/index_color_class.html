@@ -88,14 +88,14 @@
         <h1>Шкала поведінки</h1>
 
         <div class="boxes-container">
-            {% for box_id, color in box_colors.items() %}
-                <div id="{{ box_id }}" class="box {{ color }}"></div>
+            {% for led_name, led_color in box_items.items() %}
+                <div id="{{ led_name }}" class="box {{ led_color }}"></div>
             {% endfor %}
         </div>
 
-        <button id="btn1" class="btn1 green" onclick="submitFormAndResetColor('btn1')"><<</button>
+        <button id="btn1" class="btn1 green" onclick="submitFormAndResetColor('btn1')">better</button>
 
-        <button id="btn2" class="btn2 red" onclick="submitFormAndResetColor('btn2')">>></button>
+        <button id="btn2" class="btn2 red" onclick="submitFormAndResetColor('btn2')">worse</button>
     </div>
 </body>
 </html>
