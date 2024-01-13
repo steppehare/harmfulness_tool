@@ -29,6 +29,9 @@ class ColorManager:
         self.led_p_red = LED('GPIO26')
         self.led_p_blue = LED('GPIO19')
         self.police_mode = False
+        self.led_a_red = LED('GPIO18')
+        self.led_a_white = LED('GPIO23')
+        self.ambulance_mode = False
 
     def inc_counter(self):
         print(f'inc_counter() counter: {self.counter}')
@@ -104,6 +107,19 @@ class ColorManager:
             mixer.music.load('Sirena_DPS.mp3')
             mixer.music.play()
 
+    def toggle_ambulance(self):
+        if self.ambulance_mode:
+            self.ambulance_mode = False
+            self.led_a_red.off()
+            self.led_a_white.off()
+        else:
+            self.ambulance_mode = True
+            self.led_a_red.blink(0.5, 0.5)
+            sleep(0.5)
+            self.led_a_white.blink(0.5, 0.5)
+            mixer.music.load('Oshibka.mp3')
+            mixer.music.play()
+
 
     def get_box_items(self):
         ui_dict = {}
@@ -130,6 +146,8 @@ def process_button(button_id):
         mixer.music.play()
     elif button_id == 'police':
         color_manager.toggle_police()
+    elif button_id == 'ambulance':
+        color_manager.toggle_ambulance()
     color_manager.update_box_color()
     print(color_manager.get_box_items())
     return jsonify(success=True)
