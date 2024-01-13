@@ -45,6 +45,7 @@ class ColorManager:
         elif self.current_led_status == 0.5:
             print(f'inc_counter() current_led_status==0.5: {self.current_led_status}')
             self.current_led_status = 1.0
+        self.update_box_color()
 
     def dec_counter(self):
         print(f'dec_counter() counter: {self.counter}')
@@ -58,6 +59,7 @@ class ColorManager:
                 self.current_led_status = 1.0
                 self.counter -= 1
                 self.counter = max(self.counter, 0)
+            self.update_box_color()
 
     def initialize_box_items(self):
         # Initialize button colors to grey
@@ -82,7 +84,7 @@ class ColorManager:
             cur_box.led_color = current_color
             print(f'update_box_color() id: {id}')
             print(f'update_box_color() current_led_status: {self.current_led_status}')
-            if id == self.counter-1 and self.current_led_status == 0.5:
+            if id != 0 and self.current_led_status == 0.5:
                 cur_box.led_status = 0.5
                 cur_box.led.blink(0.5, 0.5)
             else:
@@ -148,7 +150,7 @@ def process_button(button_id):
         color_manager.toggle_police()
     elif button_id == 'ambulance':
         color_manager.toggle_ambulance()
-    color_manager.update_box_color()
+    # color_manager.update_box_color()
     print(color_manager.get_box_items())
     return jsonify(success=True)
 
