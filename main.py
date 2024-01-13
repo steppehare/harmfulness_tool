@@ -19,7 +19,7 @@ class BoxItem:
 class ColorManager:
     def __init__(self):
         self.counter = 0
-        print(f'__init__()')
+        print('__init__()')
         self.cur_led_status = 1
         self.gpios = ['GPIO13', 'GPIO6', 'GPIO5', 'GPIO22', 'GPIO27', 'GPIO17', 'GPIO4']
         self._max_counter = len(self.gpios)
@@ -35,6 +35,7 @@ class ColorManager:
             self.cur_led_status == 0.5
             self.counter += 1
             self.counter = min(self.counter, self._max_counter)
+            print(f'inc_counter() cur_led_status==1 new: {self.cur_led_status}')
         elif self.cur_led_status == 0.5:
             print(f'inc_counter() cur_led_status==0.5: {self.cur_led_status}')
             self.cur_led_status = 1
