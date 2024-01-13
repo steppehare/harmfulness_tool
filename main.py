@@ -20,7 +20,7 @@ class ColorManager:
     def __init__(self):
         self.counter = 0
         print('__init__()')
-        self.cur_led_status = 'blink'
+        self.current_led_status = 1
         self.gpios = ['GPIO13', 'GPIO6', 'GPIO5', 'GPIO22', 'GPIO27', 'GPIO17', 'GPIO4']
         self._max_counter = len(self.gpios)
         self.box_items = {}
@@ -35,27 +35,27 @@ class ColorManager:
 
     def inc_counter(self):
         print(f'inc_counter() counter: {self.counter}')
-        print(f'inc_counter() cur_led_status: {self.cur_led_status}')
-        if self.cur_led_status == 'on':
-            print(f'inc_counter() cur_led_status==1: {self.cur_led_status}')
-            self.cur_led_status == 'blink'
+        print(f'inc_counter() current_led_status: {self.current_led_status}')
+        if self.current_led_status == 1:
+            print(f'inc_counter() current_led_status==1: {self.current_led_status}')
+            self.current_led_status == 0.5
             self.counter += 1
             self.counter = min(self.counter, self._max_counter)
-            print(f'inc_counter() cur_led_status==1 new: {self.cur_led_status}')
-        elif self.cur_led_status == 'blink':
-            print(f'inc_counter() cur_led_status==0.5: {self.cur_led_status}')
-            self.cur_led_status = 'on'
+            print(f'inc_counter() current_led_status==1 new: {self.current_led_status}')
+        elif self.current_led_status == 0.5:
+            print(f'inc_counter() current_led_status==0.5: {self.current_led_status}')
+            self.current_led_status = 1
 
     def dec_counter(self):
         print(f'dec_counter() counter: {self.counter}')
-        print(f'dec_counter() cur_led_status: {self.cur_led_status}')
+        print(f'dec_counter() current_led_status: {self.current_led_status}')
         if self.counter > 0:
-            if self.cur_led_status == 'on':
-                print(f'dec_counter() cur_led_status==1: {self.cur_led_status}')
-                self.cur_led_status = 'blink'
-            elif self.cur_led_status == 0.5:
-                print(f'dec_counter() cur_led_status==0.5: {self.cur_led_status}')
-                self.cur_led_status = 'on'
+            if self.current_led_status == 1:
+                print(f'dec_counter() current_led_status==1: {self.current_led_status}')
+                self.current_led_status = 0.5
+            elif self.current_led_status == 0.5:
+                print(f'dec_counter() current_led_status==0.5: {self.current_led_status}')
+                self.current_led_status = 1
                 self.counter -= 1
                 self.counter = max(self.counter, 0)
 
@@ -70,7 +70,7 @@ class ColorManager:
                 current_color = 'green'
             elif id == self._max_counter-1:
                 current_color = 'red'
-                mixer.music.load('Oshibka.mp3')
+                mixer.music.load('Sirena.mp3')
                 mixer.music.play()
             else:
                 current_color = 'yellow'
@@ -81,8 +81,8 @@ class ColorManager:
             cur_box.led_status = 1
             cur_box.led_color = current_color
             print(f'update_box_color() id: {id}')
-            print(f'update_box_color() cur_led_status: {self.cur_led_status}')
-            if id == self.counter-1 and self.cur_led_status == 'blink':
+            print(f'update_box_color() current_led_status: {self.current_led_status}')
+            if id == self.counter-1 and self.current_led_status == 0.5:
                 cur_box.led_status = 0.5
                 cur_box.led.blink(0.5, 0.5)
             else:
@@ -104,7 +104,7 @@ class ColorManager:
             self.led_p_red.blink(0.5, 0.5)
             sleep(0.5)
             self.led_p_blue.blink(0.5, 0.5)
-            mixer.music.load('Sirena_DPS.mp3')
+            mixer.music.load('Sirena.mp3')
             mixer.music.play()
 
     def toggle_ambulance(self):
