@@ -33,8 +33,7 @@
             transition: background-color 0.3s;
         }
 
-        .btn1 { color: white; }
-        .btn2 { color: white; }
+        .btn { color: white; }
 
         .boxes-container {
             display: flex;
@@ -93,9 +92,12 @@
             {% endfor %}
         </div>
 
-        <button id="btn1" class="btn1 green" onclick="submitFormAndResetColor('btn1')">better</button>
+        <button id="better" class="btn green" onclick="submitFormAndResetColor('btn1')">better</button>
 
-        <button id="btn2" class="btn2 red" onclick="submitFormAndResetColor('btn2')">worse</button>
+        <button id="worse" class="btn red" onclick="submitFormAndResetColor('btn2')">worse</button>
+    </div>
+    <div>
+        <button id="domofon" class="" onclick="submitFormAndResetColor('btn2')">worse</button>
     </div>
 </body>
 </html>

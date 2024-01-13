@@ -44,10 +44,12 @@ class ColorManager:
                 current_color = 'green'
             elif id == self._max_counter-1:
                 current_color = 'red'
-                mixer.music.load('tmp.mp3')
+                mixer.music.load('Oshibka.mp3')
                 mixer.music.play()
             else:
                 current_color = 'yellow'
+                mixer.music.load('Elektroshoker.mp3')
+                mixer.music.play()
             cur_gpio = self.gpios[id]
             cur_box = self.box_items[cur_gpio]
             cur_box.led_status = 1
@@ -76,8 +78,8 @@ def index():
 def process_button(button_id):
     click_count = request.json.get('click_count', 0)
     # Update the color based on click count (for example, change to red on every even click)
-    new_color = 'red' if button_id == 'btn2' else 'grey'
-    if button_id == 'btn1':
+    new_color = 'red' if button_id == 'worse' else 'grey'
+    if button_id == 'better':
         new_color ='grey'
         color_manager.dec_counter()
     else:
