@@ -45,6 +45,7 @@ class ColorManager:
         elif self.current_led_status == 0.5:
             print(f'inc_counter() current_led_status==0.5: {self.current_led_status}')
             self.current_led_status = 1.0
+            print(f'inc_counter() current_led_status==0.5 new: {self.current_led_status}')
         self.update_box_color()
 
     def dec_counter(self):
@@ -54,11 +55,13 @@ class ColorManager:
             if self.current_led_status == 1.0:
                 print(f'dec_counter() current_led_status==1: {self.current_led_status}')
                 self.current_led_status = 0.5
+                print(f'dec_counter() current_led_status==1 new: {self.current_led_status}')
             elif self.current_led_status == 0.5:
                 print(f'dec_counter() current_led_status==0.5: {self.current_led_status}')
                 self.current_led_status = 1.0
                 self.counter -= 1
                 self.counter = max(self.counter, 0)
+                print(f'dec_counter() current_led_status==0.5 new: {self.current_led_status}')
             self.update_box_color()
 
     def initialize_box_items(self):
