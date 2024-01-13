@@ -19,6 +19,7 @@ class BoxItem:
 class ColorManager:
     def __init__(self):
         self.counter = 0
+        print(f'__init__()')
         self.cur_led_status = 1
         self.gpios = ['GPIO13', 'GPIO6', 'GPIO5', 'GPIO22', 'GPIO27', 'GPIO17', 'GPIO4']
         self._max_counter = len(self.gpios)
