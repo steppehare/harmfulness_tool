@@ -39,10 +39,14 @@ class ColorManager:
             self.cur_led_status = 1
 
     def dec_counter(self):
+        print(f'dec_counter() counter: {self.counter}')
+        print(f'dec_counter() cur_led_status: {self.cur_led_status}')
         if self.counter > 0:
             if self.cur_led_status == 1:
+                print(f'dec_counter() cur_led_status==1: {self.cur_led_status}')
                 self.cur_led_status = 0.5
             elif self.cur_led_status == 0.5:
+                print(f'dec_counter() cur_led_status==0.5: {self.cur_led_status}')
                 self.cur_led_status = 1
                 self.counter -= 1
                 self.counter = max(self.counter, 0)
