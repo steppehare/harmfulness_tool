@@ -40,7 +40,7 @@ class ColorManager:
             print(f'inc_counter() current_led_status==1: {self.current_led_status}')
             self.counter += 1
             self.counter = min(self.counter, self._max_counter)
-            self.current_led_status == 0.5
+            self.current_led_status = 0.5
             print(f'inc_counter() current_led_status==1 new: {self.current_led_status}')
         elif self.current_led_status == 0.5:
             print(f'inc_counter() current_led_status==0.5: {self.current_led_status}')
