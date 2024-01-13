@@ -20,7 +20,7 @@ class ColorManager:
     def __init__(self):
         self.counter = 0
         print('__init__()')
-        self.current_led_status = 1
+        self.current_led_status = 1.0
         self.gpios = ['GPIO13', 'GPIO6', 'GPIO5', 'GPIO22', 'GPIO27', 'GPIO17', 'GPIO4']
         self._max_counter = len(self.gpios)
         self.box_items = {}
@@ -36,7 +36,7 @@ class ColorManager:
     def inc_counter(self):
         print(f'inc_counter() counter: {self.counter}')
         print(f'inc_counter() current_led_status: {self.current_led_status}')
-        if self.current_led_status == 1:
+        if self.current_led_status == 1.0:
             print(f'inc_counter() current_led_status==1: {self.current_led_status}')
             self.counter += 1
             self.counter = min(self.counter, self._max_counter)
@@ -44,18 +44,18 @@ class ColorManager:
             print(f'inc_counter() current_led_status==1 new: {self.current_led_status}')
         elif self.current_led_status == 0.5:
             print(f'inc_counter() current_led_status==0.5: {self.current_led_status}')
-            self.current_led_status = 1
+            self.current_led_status = 1.0
 
     def dec_counter(self):
         print(f'dec_counter() counter: {self.counter}')
         print(f'dec_counter() current_led_status: {self.current_led_status}')
         if self.counter > 0:
-            if self.current_led_status == 1:
+            if self.current_led_status == 1.0:
                 print(f'dec_counter() current_led_status==1: {self.current_led_status}')
                 self.current_led_status = 0.5
             elif self.current_led_status == 0.5:
                 print(f'dec_counter() current_led_status==0.5: {self.current_led_status}')
-                self.current_led_status = 1
+                self.current_led_status = 1.0
                 self.counter -= 1
                 self.counter = max(self.counter, 0)
 
@@ -78,7 +78,7 @@ class ColorManager:
                 mixer.music.play()
             cur_gpio = self.gpios[id]
             cur_box = self.box_items[cur_gpio]
-            cur_box.led_status = 1
+            cur_box.led_status = 1.0
             cur_box.led_color = current_color
             print(f'update_box_color() id: {id}')
             print(f'update_box_color() current_led_status: {self.current_led_status}')
