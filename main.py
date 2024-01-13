@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from gpiozero import LED
 from pygame import mixer
 from dataclasses import dataclass
+from time import sleep
 
 
 app = Flask(__name__)
@@ -13,7 +14,6 @@ class BoxItem:
     led_name: str
     led_color: str = 'grey'
     led_status: float = 0.0
-    led_name2: str = ''
 
 
 class ColorManager:
@@ -26,6 +26,9 @@ class ColorManager:
         self.box_items = {}
         mixer.init()
         self.initialize_box_items()
+        self.led_p_red = LED('GPIO26')
+        self.led_p_blue = LED('GPIO19')
+        self.police_mode = False
 
     def inc_counter(self):
         print(f'inc_counter() counter: {self.counter}')
@@ -88,6 +91,17 @@ class ColorManager:
             cur_box.led_color = 'grey'
             cur_box.led.off()
 
+    def toggle_police(self):
+        if self.police_mode:
+            self.police_mode = False
+            self.led_p_red.off()
+            self.led_p_blue.off()
+        else:
+            self.led_p_red.blink(0.5, 0.5)
+            sleep(0.5)
+            self.led_p_blue.blink(0.5, 0.5)
+
+
     def get_box_items(self):
         ui_dict = {}
         for item in self.box_items.values():
@@ -111,6 +125,8 @@ def process_button(button_id):
     elif button_id == 'domofon':
         mixer.music.load('Domofon.mp3')
         mixer.music.play()
+    elif button_id == 'police':
+        color_manager.toggle_police()
     color_manager.update_box_color()
     print(color_manager.get_box_items())
     return jsonify(success=True)
